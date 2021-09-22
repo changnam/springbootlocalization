@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
 @SpringBootApplication
 public class SpringbootlocalizationApplication {
@@ -18,10 +21,6 @@ public class SpringbootlocalizationApplication {
 	
 	@Autowired
 	private MessageSource messageSource;
-
-	public SpringbootlocalizationApplication(MessageSource messageSource) {
-		this.messageSource = messageSource;
-	}
 	
 	public static void main(String[] args) {
 		
@@ -32,7 +31,17 @@ public class SpringbootlocalizationApplication {
 	public void init() {
 	    //String city=zipCodeLookupService.retriveCityForZip(args[0]);
 	    //System.out.println("city for zipcode " + args[0] + " is " +city); 
+	    logger.info(messageSource.getMessage("hello", null, Locale.ENGLISH));
 	    logger.info(messageSource.getMessage("hello", null, Locale.KOREAN));
+	    
+	    ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
+	    resourceBundleMessageSource.setBasenames("lang/res");
+
+	    System.out.println(resourceBundleMessageSource.getMessage("hello", null, Locale.US));
+	    
 	}
+	
+	
+	
 
 }
